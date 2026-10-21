@@ -1,0 +1,26 @@
+name: dragonball-service
+services:
+  mongo:
+    image: mongo:7.0
+    ports:
+      - "127.0.0.1:27017:27017"
+    volumes:
+      - characters_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "quit(db.runCommand({ping:1}).ok?0:1)"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+  app:
+    build: .
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${APP_PORT:-8080}:8080"
+    environment:
+      MONGODB_URI: mongodb://mongo:27017
+      DRAGONBALL_API_URL: ${DRAGONBALL_API_URL:-https://dragonball-api.com/api}
+    depends_on:
+      mongo:
+        condition: service_healthy
+    stop_grace_period: 15s
+volumes:
+  characters_data:

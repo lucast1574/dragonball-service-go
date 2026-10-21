@@ -1,0 +1,20 @@
+# Local configuration
+.env
+.env.*
+!.env.example
+
+# Build and test output
+/bin/
+/dist/
+/api
+/client
+*.exe
+*.test
+*.out
+/coverage/
+
+# Editor and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
