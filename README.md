@@ -169,31 +169,4 @@ README.md
 
 También disponible en [docs/sequence.md](docs/sequence.md).
 
-```mermaid
-sequenceDiagram
-    actor Cliente
-    participant Servicio as Servicio Go
-    participant API as DragonBall API
-    participant Mongo as MongoDB
-    Cliente->>Servicio: POST /characters {name}
-    Servicio->>Servicio: Validar Content-Type y JSON
-    alt Entrada inválida
-        Servicio-->>Cliente: 400 / 413 / 415
-    else Entrada válida
-        Servicio->>API: GET /api/characters?name=...
-        API-->>Servicio: Respuesta externa
-        Servicio->>Servicio: Resolver name o character y validar campos
-        alt Sin coincidencia o fallo externo
-            Servicio-->>Cliente: 404 / 502 / 504
-        else Coincidencia válida y única
-            Servicio->>Mongo: InsertOne con ID externo como _id
-            Mongo-->>Servicio: Confirmación o error
-            alt Escritura confirmada
-                Servicio->>Servicio: Registrar creación en logs
-                Servicio-->>Cliente: 201 Created con personaje
-            else Duplicado o fallo de almacenamiento
-                Servicio-->>Cliente: 409 / 503 / 504
-            end
-        end
-    end
-```
+![Diagrama de secuencia del servicio DragonBall](docs/sequence.png)

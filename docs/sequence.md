@@ -4,6 +4,10 @@ Flujo de `POST /characters`: validación de entrada, consulta a DragonBall API y
 
 [Volver al README](../README.md#diagrama-de-secuencia).
 
+![Diagrama de secuencia del servicio DragonBall](sequence.png)
+
+## Fuente Mermaid
+
 ```mermaid
 sequenceDiagram
     actor Cliente
