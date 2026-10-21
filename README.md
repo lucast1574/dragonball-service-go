@@ -24,9 +24,13 @@ docker compose logs -f app
 
 El endpoint recibe un único campo `name` de tipo string.
 
-**Bash**
+**Linux, macOS o Git Bash en Windows**
+
+Desde Bash, inicia el servicio y envía la petición:
 
 ```sh
+docker compose up -d --build
+
 curl -i http://localhost:8080/characters \
   -H 'Content-Type: application/json' \
   -d '{"name":"Goku"}'
@@ -34,9 +38,17 @@ curl -i http://localhost:8080/characters \
 
 **PowerShell**
 
+En una terminal PowerShell, usa:
+
 ```powershell
 Invoke-RestMethod -Method Post -Uri 'http://localhost:8080/characters' `
   -ContentType 'application/json' -Body '{"name":"Goku"}'
+```
+
+`Invoke-RestMethod` es un comando de PowerShell; no funciona en Linux ni en Git Bash (`MINGW64`). En Bash, `\` continúa un comando en la siguiente línea; PowerShell utiliza el acento invertido. También puedes enviar la petición en una sola línea desde Bash:
+
+```sh
+curl -i http://localhost:8080/characters -H 'Content-Type: application/json' -d '{"name":"Goku"}'
 ```
 
 Respuesta de ejemplo: `201 Created`.
